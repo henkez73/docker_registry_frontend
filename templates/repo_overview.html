@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %}Repositories{% endblock %}
+{% block header %}{% include 'breadcrumbs.html' %}{% endblock %}
+{% block content %}
+{% if registry.is_online() %}
+<table id="repo_table" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Number of Tags</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for repo in registry.get_repos() %}
+        <tr>
+            <td><a href="{{url_for('tag_overview', registry_name=registry.name, repo=(repo | urlencode))}}">{{repo}}</a></td>
+            <td>{{ registry.get_number_of_tags(repo) }}</td>
+            {% if registry.supports_repo_deletion %}
+            <td>
+                <form action="{{url_for('delete_repo', registry_name=registry.name, repo=(repo | urlencode))}}" method="post">
+                    <button type="submit" class="btn btn-danger btn-xs">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </form>
+            </td>
+            {% else %}
+            <td></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% include 'table_include.html' %}
+{% else %}
+{% include 'offline.html' %}
+{% endif %}
+{% endblock %}

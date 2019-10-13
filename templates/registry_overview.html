@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block title %}Registries{% endblock %}
+{% block header %}{% include 'breadcrumbs.html' %}{% endblock %}
+{% block content %}
+<div class="pull-right">
+    <a role="button" class="btn btn-success" href="/add_registry">
+        <span class="glyphicon glyphicon-plus"></span>
+        Add Registry
+    </a>
+</div>
+<table id="registry_table" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>URL</th>
+            <th>Online</th>
+            <th>Number of Repos</th>
+            <th>Version</th>
+            <th data-orderable="false"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for identifier, registry in registries.items() %}
+        <tr>
+            <td><a href="{{ url_for('repo_overview', registry_name=registry.name) }}">{{registry.name}}</a></td>
+            <td>{{ registry.url}}</td>
+            {% if registry.is_online() %}
+            <td data-order="1" data-search="online"><span class="glyphicon glyphicon-ok-circle text-success"></span></td>
+            <td>{{ registry.get_number_of_repos() }}</td>
+            <td>v{{ registry.version }}</td>
+            {% else %}
+            <td data-order="0" data-search="offline"><span class="glyphicon glyphicon-remove-circle text-danger"></span></td>
+            <td data-order="0"></td>
+            <td data-order="0"></td>
+            {% endif %}
+            <td>
+                <a href="{{url_for('update_registry', id=identifier)}}">
+                    <button type="submit" class="btn btn-primary btn-xs">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                </a>
+                <form action="{{url_for('remove_registry', id=identifier)}}" method="post">
+                    <button type="submit" class="btn btn-danger btn-xs">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% include 'table_include.html' %}
+{% endblock %}

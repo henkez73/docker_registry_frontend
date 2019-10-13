@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+    <head>
+        {% block head %}
+        <title>{% block title %}{% endblock %} - Docker Registry Web</title>
+        {% endblock %}
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/custom.css') }}">
+
+        <script src= "{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
+        <script src= "{{ url_for('static', filename='bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+        <script src= "{{ url_for('static', filename='bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+        <script src= "{{ url_for('static', filename='bower_components/clipboard/dist/clipboard.min.js') }}"></script>
+        <script src= "{{ url_for('static', filename='bower_components/jquery-timeago/jquery.timeago.js') }}"></script>
+        <script src= "{{ url_for('static', filename='bower_components/bootstrap-validator/dist/validator.min.js') }}"></script>
+    </head>
+    <body>
+        <div id="header">{% block header %}{% endblock %}</div>
+        <div id="content" class="container-fluid">{% block content %}{% endblock %}</div>
+        <footer id="footer" class="footer text-center">
+            <div class="container">
+                {% block footer %}
+                Modified with <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> by <a href="https://github.com/henkez">henkez</a>
+                /
+                <a href="https://github.com/henkez/docker_registry_frontend">Fork me!</a>
+                {% endblock %}
+            </div>
+        </footer>
+    </body>
+    <script>
+    clipboard = new Clipboard('.btn');
+    </script>
+</html>

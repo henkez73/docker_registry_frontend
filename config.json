@@ -1,0 +1,6 @@
+{
+  "storage": {
+    "driver": "json",
+    "file_path": "/opt/db.json"
+  }
+}
